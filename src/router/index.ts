@@ -1,25 +1,36 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import ReportItem from '@/components/automation/ReportItem.vue'
+import DefaultChart from '@/components/dashboard/DefaultChart.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    alias: '/menu',
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: DefaultChart
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    alias: '/menu',
+    path: '/automation',
+    name: 'Automation',
+    component: ReportItem
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 
 export default router
+
+export const menuRoutes = () => {
+  const menues = new Array<RouteRecordRaw>()
+  routes.forEach(function (route) {
+    console.log(route.alias)
+    if (route.alias === '/menu') {
+      menues.push(route)
+    }
+  })
+  return menues
+}

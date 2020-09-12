@@ -1,30 +1,54 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <Sidebar />
+    <main v-bind:class="{is_open: isShow}">
+      <router-view />
+    </main>
   </div>
-  <router-view/>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import { Getter } from 'vuex-class'
+import Sidebar from '@/components/sidebar/Sidebar.vue'
+@Options({
+  components: {
+    Sidebar
   }
+})
+export default class App extends Vue {
+    @Getter('isShow', { namespace: 'sidebar' }) isShow?: boolean;
 }
+</script>
+
+<style lang="less">
+
+#app, html, body
+{
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+#app
+{
+  display: flex;
+}
+
+main
+{
+  width: 100%;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left:110px;
+  transition:all 0.3s;
+}
+
+main.is_open
+{
+  padding-left:280px !important;
+}
+
 </style>

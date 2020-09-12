@@ -1,12 +1,15 @@
-import { createStore } from 'vuex'
+// index.ts
+import { StoreOptions, createStore } from 'vuex'
+import { RootState } from './types'
+import { sidebar } from './modules/sidebar'
 
-export default createStore({
+const storeOptions: StoreOptions<RootState> = {
   state: {
-  },
-  mutations: {
-  },
-  actions: {
+    version: '1.0.0'
   },
   modules: {
+    sidebar
   }
-})
+}
+
+export const store = createStore(storeOptions)
